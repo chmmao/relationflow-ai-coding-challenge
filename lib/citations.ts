@@ -17,11 +17,8 @@ export function resolveVisibleSources(
   allSources: Source[],
   context: ViewerContext
 ): Source[] {
-  void answer;
-  void allSources;
-  void context;
-
-  // BUG: the legacy resolver still expects pre-resolved citation records.
-  // Answers now provide sourceIds, so the UI always falls back to its empty state.
-  return [];
+  return answer.sourceIds
+    .map((id) => allSources.find((source) => source.id === id))
+    .filter((source): source is Source => source != null)
+    .filter((source) => canViewSource(source, context));
 }
